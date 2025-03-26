@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  db-node1:
+    image: postgres:14
+    container_name: db-node1
+    environment:
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_USER: user
+      POSTGRES_DB: demodb
+    ports:
+      - "5431:5432" # Ánh xạ cổng 5432 của container ra cổng 5431 của máy host
+    volumes:
+      - db-data1:/var/lib/postgresql/data
+
+  db-node2:
+    image: postgres:14
+    container_name: db-node2
+    environment:
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_USER: user
+      POSTGRES_DB: demodb
+    ports:
+      - "5432:5432" # Ánh xạ ra cổng 5432 của máy host
+    volumes:
+      - db-data2:/var/lib/postgresql/data
+
+  db-node3:
+    image: postgres:14
+    container_name: db-node3
+    environment:
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_USER: user
+      POSTGRES_DB: demodb
+    ports:
+      - "5433:5432" # Ánh xạ ra cổng 5433 của máy host
+    volumes:
+      - db-data3:/var/lib/postgresql/data
+
+  backend_app:
+    build: ./backend # Giả sử code backend nằm trong thư mục 'backend'
+    container_name: backend_app
+    ports:
+      - "5000:5000" # Cổng ứng dụng backend (ví dụ Flask)
+    environment:
+      # Truyền chuỗi kết nối hoặc thông tin các node DB vào đây
+      DB_NODE1_URL: postgresql://user:yourpassword@db-node1:5432/demodb
+      DB_NODE2_URL: postgresql://user:yourpassword@db-node2:5432/demodb
+      DB_NODE3_URL: postgresql://user:yourpassword@db-node3:5432/demodb
+    depends_on: # Đảm bảo các DB khởi động trước backend
+      - db-node1
+      - db-node2
+      - db-node3
+    volumes:
+      - ./backend:/app # (Tùy chọn) Mount code để thay đổi thấy ngay không cần build lại (cho dev)
+
+  # (Tùy chọn) Frontend service nếu có
+
+volumes: # Để lưu trữ dữ liệu DB ngay cả khi container dừng/khởi động lại
+  db-data1:
+  db-data2:
+  db-data3:

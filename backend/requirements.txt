@@ -1,0 +1,4 @@
+Flask
+psycopg2-binary
+Flask-Cors
+python-dotenv # Để đọc biến môi trường dễ dàng hơn (tùy chọn)

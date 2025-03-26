@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo CSDL Phân Tán</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Demo Replication CSDL Phân Tán</h1>
+
+    <div class="control-panel">
+        <h2>Thêm Item Mới</h2>
+        <input type="text" id="item-name" placeholder="Nhập tên item">
+        <button id="add-item-btn">Thêm Item</button>
+        <p id="status-message"></p>
+    </div>
+
+    <div class="search-panel">
+        <h2>Tìm Kiếm Item</h2>
+        <input type="text" id="search-term" placeholder="Nhập tên cần tìm">
+        <button id="search-btn">Tìm</button>
+        <h3>Kết quả tìm kiếm:</h3>
+        <pre class="data-display" id="search-results">Chưa có tìm kiếm nào.</pre>
+   </div>
+
+    <div class="nodes-container">
+        <div class="node" id="node-1">
+            <h2>Node 1 (Port 5431)</h2>
+            <button class="refresh-btn" data-node="1">Làm mới</button>
+            <pre class="data-display" id="node-1-data">Đang tải...</pre>
+        </div>
+        <div class="node" id="node-2">
+            <h2>Node 2 (Port 5432)</h2>
+             <button class="refresh-btn" data-node="2">Làm mới</button>
+            <pre class="data-display" id="node-2-data">Đang tải...</pre>
+        </div>
+        <div class="node" id="node-3">
+            <h2>Node 3 (Port 5433)</h2>
+             <button class="refresh-btn" data-node="3">Làm mới</button>
+            <pre class="data-display" id="node-3-data">Đang tải...</pre>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
